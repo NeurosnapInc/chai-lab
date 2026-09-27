@@ -44,6 +44,9 @@ from chai_lab.data.dataset.structure.all_atom_structure_context import (
 from chai_lab.data.dataset.structure.bond_utils import (
     get_atom_covalent_bond_pairs_from_constraints,
 )
+from chai_lab.data.dataset.structure.polymer_bonds import (
+    add_inferred_polymer_bonds,
+)
 from chai_lab.data.dataset.templates.context import (
     TemplateContext,
     get_template_context,
@@ -386,6 +389,8 @@ def make_all_atom_feature_context(
     merged_context = AllAtomStructureContext.merge(
         [c.structure_context for c in chains]
     )
+    add_inferred_polymer_bonds(merged_context)
+
     for chain in chains:
         if chain.entity_data.entity_name not in cyclic_chain_names:
             continue
